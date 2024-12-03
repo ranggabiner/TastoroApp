@@ -1,0 +1,574 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		8F9CE2892CFEC29200AEC167 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F9CE26A2CFEC29000AEC167 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F9CE2712CFEC29000AEC167;
+			remoteInfo = Tastoro;
+		};
+		8F9CE2932CFEC29200AEC167 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F9CE26A2CFEC29000AEC167 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F9CE2712CFEC29000AEC167;
+			remoteInfo = Tastoro;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8F9CE2722CFEC29000AEC167 /* Tastoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tastoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F9CE2882CFEC29200AEC167 /* TastoroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TastoroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F9CE2922CFEC29200AEC167 /* TastoroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TastoroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8F9CE29A2CFEC29200AEC167 /* Exceptions for "Tastoro" folder in "Tastoro" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8F9CE2712CFEC29000AEC167 /* Tastoro */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		8F9CE2742CFEC29000AEC167 /* Tastoro */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8F9CE29A2CFEC29200AEC167 /* Exceptions for "Tastoro" folder in "Tastoro" target */,
+			);
+			path = Tastoro;
+			sourceTree = "<group>";
+		};
+		8F9CE28B2CFEC29200AEC167 /* TastoroTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TastoroTests;
+			sourceTree = "<group>";
+		};
+		8F9CE2952CFEC29200AEC167 /* TastoroUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TastoroUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8F9CE26F2CFEC29000AEC167 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F9CE2852CFEC29200AEC167 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F9CE28F2CFEC29200AEC167 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8F9CE2692CFEC29000AEC167 = {
+			isa = PBXGroup;
+			children = (
+				8F9CE2742CFEC29000AEC167 /* Tastoro */,
+				8F9CE28B2CFEC29200AEC167 /* TastoroTests */,
+				8F9CE2952CFEC29200AEC167 /* TastoroUITests */,
+				8F9CE2732CFEC29000AEC167 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8F9CE2732CFEC29000AEC167 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8F9CE2722CFEC29000AEC167 /* Tastoro.app */,
+				8F9CE2882CFEC29200AEC167 /* TastoroTests.xctest */,
+				8F9CE2922CFEC29200AEC167 /* TastoroUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8F9CE2712CFEC29000AEC167 /* Tastoro */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F9CE29B2CFEC29200AEC167 /* Build configuration list for PBXNativeTarget "Tastoro" */;
+			buildPhases = (
+				8F9CE26E2CFEC29000AEC167 /* Sources */,
+				8F9CE26F2CFEC29000AEC167 /* Frameworks */,
+				8F9CE2702CFEC29000AEC167 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				8F9CE2742CFEC29000AEC167 /* Tastoro */,
+			);
+			name = Tastoro;
+			packageProductDependencies = (
+			);
+			productName = Tastoro;
+			productReference = 8F9CE2722CFEC29000AEC167 /* Tastoro.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8F9CE2872CFEC29200AEC167 /* TastoroTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F9CE2A02CFEC29200AEC167 /* Build configuration list for PBXNativeTarget "TastoroTests" */;
+			buildPhases = (
+				8F9CE2842CFEC29200AEC167 /* Sources */,
+				8F9CE2852CFEC29200AEC167 /* Frameworks */,
+				8F9CE2862CFEC29200AEC167 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F9CE28A2CFEC29200AEC167 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8F9CE28B2CFEC29200AEC167 /* TastoroTests */,
+			);
+			name = TastoroTests;
+			packageProductDependencies = (
+			);
+			productName = TastoroTests;
+			productReference = 8F9CE2882CFEC29200AEC167 /* TastoroTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8F9CE2912CFEC29200AEC167 /* TastoroUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F9CE2A32CFEC29200AEC167 /* Build configuration list for PBXNativeTarget "TastoroUITests" */;
+			buildPhases = (
+				8F9CE28E2CFEC29200AEC167 /* Sources */,
+				8F9CE28F2CFEC29200AEC167 /* Frameworks */,
+				8F9CE2902CFEC29200AEC167 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F9CE2942CFEC29200AEC167 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8F9CE2952CFEC29200AEC167 /* TastoroUITests */,
+			);
+			name = TastoroUITests;
+			packageProductDependencies = (
+			);
+			productName = TastoroUITests;
+			productReference = 8F9CE2922CFEC29200AEC167 /* TastoroUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8F9CE26A2CFEC29000AEC167 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					8F9CE2712CFEC29000AEC167 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					8F9CE2872CFEC29200AEC167 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 8F9CE2712CFEC29000AEC167;
+					};
+					8F9CE2912CFEC29200AEC167 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 8F9CE2712CFEC29000AEC167;
+					};
+				};
+			};
+			buildConfigurationList = 8F9CE26D2CFEC29000AEC167 /* Build configuration list for PBXProject "Tastoro" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8F9CE2692CFEC29000AEC167;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8F9CE2732CFEC29000AEC167 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8F9CE2712CFEC29000AEC167 /* Tastoro */,
+				8F9CE2872CFEC29200AEC167 /* TastoroTests */,
+				8F9CE2912CFEC29200AEC167 /* TastoroUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8F9CE2702CFEC29000AEC167 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F9CE2862CFEC29200AEC167 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F9CE2902CFEC29200AEC167 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8F9CE26E2CFEC29000AEC167 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F9CE2842CFEC29200AEC167 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F9CE28E2CFEC29200AEC167 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8F9CE28A2CFEC29200AEC167 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F9CE2712CFEC29000AEC167 /* Tastoro */;
+			targetProxy = 8F9CE2892CFEC29200AEC167 /* PBXContainerItemProxy */;
+		};
+		8F9CE2942CFEC29200AEC167 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F9CE2712CFEC29000AEC167 /* Tastoro */;
+			targetProxy = 8F9CE2932CFEC29200AEC167 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		8F9CE29C2CFEC29200AEC167 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A23N5QDWR3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tastoro/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ranggabiner.Tastoro.Tastoro;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8F9CE29D2CFEC29200AEC167 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A23N5QDWR3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tastoro/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ranggabiner.Tastoro.Tastoro;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8F9CE29E2CFEC29200AEC167 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8F9CE29F2CFEC29200AEC167 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8F9CE2A12CFEC29200AEC167 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A23N5QDWR3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ranggabiner.Tastoro.TastoroTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tastoro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tastoro";
+			};
+			name = Debug;
+		};
+		8F9CE2A22CFEC29200AEC167 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A23N5QDWR3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ranggabiner.Tastoro.TastoroTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tastoro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tastoro";
+			};
+			name = Release;
+		};
+		8F9CE2A42CFEC29200AEC167 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A23N5QDWR3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ranggabiner.Tastoro.TastoroUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tastoro;
+			};
+			name = Debug;
+		};
+		8F9CE2A52CFEC29200AEC167 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A23N5QDWR3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ranggabiner.Tastoro.TastoroUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tastoro;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8F9CE26D2CFEC29000AEC167 /* Build configuration list for PBXProject "Tastoro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F9CE29E2CFEC29200AEC167 /* Debug */,
+				8F9CE29F2CFEC29200AEC167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F9CE29B2CFEC29200AEC167 /* Build configuration list for PBXNativeTarget "Tastoro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F9CE29C2CFEC29200AEC167 /* Debug */,
+				8F9CE29D2CFEC29200AEC167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F9CE2A02CFEC29200AEC167 /* Build configuration list for PBXNativeTarget "TastoroTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F9CE2A12CFEC29200AEC167 /* Debug */,
+				8F9CE2A22CFEC29200AEC167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F9CE2A32CFEC29200AEC167 /* Build configuration list for PBXNativeTarget "TastoroUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F9CE2A42CFEC29200AEC167 /* Debug */,
+				8F9CE2A52CFEC29200AEC167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8F9CE26A2CFEC29000AEC167 /* Project object */;
+}
