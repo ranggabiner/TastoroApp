@@ -15,7 +15,7 @@ class MealViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Meals"
+        title = "Choose Your Menu"
         view.backgroundColor = .white
         
         setupTableView()
