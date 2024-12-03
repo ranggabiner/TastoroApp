@@ -8,12 +8,18 @@
 import Foundation
 
 protocol MealInteractorProtocol: AnyObject {
-    func fetchMeals(completion: @escaping (Result<[Meal], Error>) -> Void)
+    func fetchMeals(area: String?, completion: @escaping (Result<[Meal], Error>) -> Void)
 }
 
 class MealInteractor: MealInteractorProtocol {
-    func fetchMeals(completion: @escaping (Result<[Meal], Error>) -> Void) {
-        guard let url = URL(string: "http://www.themealdb.com/api/json/v1/1/search.php?s=chicken") else { return }
+    func fetchMeals(area: String?, completion: @escaping (Result<[Meal], Error>) -> Void) {
+        var urlString = "http://www.themealdb.com/api/json/v1/1/search.php?s=chicken"
+        
+        if let area = area, !area.isEmpty {
+            urlString = "http://www.themealdb.com/api/json/v1/1/filter.php?a=\(area)"
+        }
+        
+        guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
