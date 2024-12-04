@@ -16,7 +16,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
     let tableView = UITableView()
     var presenter: MealPresenterProtocol?
     private var meals: [Meal] = []
-    private let toggleButtons: [UIButton] = ["Indian", "Chinese", "Japanese", "French", "Moroccan", "Moroccan", "Moroccan", "Moroccan"].map {
+    private let toggleButtons: [UIButton] = ["Indian", "Chinese", "Japanese", "French", "Moroccan"].map {
         let button = UIButton(type: .system)
         button.setTitle($0, for: .normal)
         button.layer.borderWidth = 1
@@ -152,6 +152,8 @@ extension MealViewController: UITableViewDataSource, UITableViewDelegate {
         }
         let meal = meals[indexPath.row]
         cell.mealLabel.text = meal.strMeal
+        cell.areaLabel.text = meal.strArea ?? "Unknown Area"
+        
         if let imageUrl = URL(string: meal.strMealThumb) {
             URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
                 if let data = data, let image = UIImage(data: data) {
