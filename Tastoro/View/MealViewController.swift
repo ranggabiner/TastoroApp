@@ -138,10 +138,8 @@ extension MealViewController: UITableViewDataSource, UITableViewDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            presenter?.viewDidLoad()
+            presenter?.updateKeyword("chicken")
         } else {
-            let filteredMeals = meals.filter { $0.strMeal.lowercased().contains(searchText.lowercased()) }
-            showMeals(filteredMeals)
+            presenter?.updateKeyword(searchText)
         }
-    }
-}
+    }}

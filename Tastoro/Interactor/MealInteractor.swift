@@ -8,23 +8,19 @@
 import Foundation
 
 protocol MealInteractorProtocol: AnyObject {
-    func fetchMeals(areas: [String], completion: @escaping (Result<[Meal], Error>) -> Void)
+    func fetchMeals(areas: [String], keyword: String, completion: @escaping (Result<[Meal], Error>) -> Void)
 }
 
 class MealInteractor: MealInteractorProtocol {
-    func fetchMeals(areas: [String], completion: @escaping (Result<[Meal], Error>) -> Void) {
-        if areas.isEmpty {
-            let urlString = "http://www.themealdb.com/api/json/v1/1/search.php?s=chicken"
-            fetchMealsFromAPI(urlString: urlString, completion: completion)
-            return
-        }
-        
+    func fetchMeals(areas: [String], keyword: String, completion: @escaping (Result<[Meal], Error>) -> Void) {
         var allMeals: [Meal] = []
         let dispatchGroup = DispatchGroup()
         var fetchError: Error?
         
-        for area in areas {
-            let urlString = "http://www.themealdb.com/api/json/v1/1/filter.php?a=\(area)"
+        for area in areas.isEmpty ? [""] : areas {
+            let urlString = area.isEmpty
+                ? "http://www.themealdb.com/api/json/v1/1/search.php?s=\(keyword)"
+                : "http://www.themealdb.com/api/json/v1/1/filter.php?a=\(area)"
             dispatchGroup.enter()
             fetchMealsFromAPI(urlString: urlString) { result in
                 switch result {
@@ -41,11 +37,12 @@ class MealInteractor: MealInteractorProtocol {
             if let error = fetchError {
                 completion(.failure(error))
             } else {
-                let filteredMeals = allMeals.filter { $0.strMeal.lowercased().contains("chicken") }
+                let filteredMeals = allMeals.filter { $0.strMeal.lowercased().contains(keyword.lowercased()) }
                 completion(.success(filteredMeals))
             }
         }
     }
+
     
     private func fetchMealsFromAPI(urlString: String, completion: @escaping (Result<[Meal], Error>) -> Void) {
         guard let url = URL(string: urlString) else {

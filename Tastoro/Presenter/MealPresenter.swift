@@ -12,6 +12,7 @@ protocol MealPresenterProtocol: AnyObject {
     func viewDidLoad()
     func didSelectMeal(at index: Int)
     func filterMeals(by areas: [String])
+    func updateKeyword(_ keyword: String) // Tambahkan fungsi ini
 }
 
 class MealPresenter: MealPresenterProtocol {
@@ -19,6 +20,7 @@ class MealPresenter: MealPresenterProtocol {
     private let interactor: MealInteractorProtocol
     private let router: MealRouterProtocol
     private var meals: [Meal] = []
+    private var keyword: String = ""
     
     init(interactor: MealInteractorProtocol, router: MealRouterProtocol) {
         self.interactor = interactor
@@ -26,7 +28,7 @@ class MealPresenter: MealPresenterProtocol {
     }
     
     func viewDidLoad() {
-        interactor.fetchMeals(areas: []) { [weak self] result in
+        interactor.fetchMeals(areas: [], keyword: "chicken") { [weak self] result in
             switch result {
             case .success(let meals):
                 self?.meals = meals
@@ -44,7 +46,8 @@ class MealPresenter: MealPresenterProtocol {
     }
     
     func filterMeals(by areas: [String]) {
-        interactor.fetchMeals(areas: areas) { [weak self] result in
+        let currentKeyword = keyword.isEmpty ? "chicken" : keyword
+        interactor.fetchMeals(areas: areas, keyword: currentKeyword) { [weak self] result in
             switch result {
             case .success(let meals):
                 let uniqueMeals = Array(Set(meals))
@@ -55,4 +58,10 @@ class MealPresenter: MealPresenterProtocol {
             }
         }
     }
+
+    func updateKeyword(_ keyword: String) {
+        self.keyword = keyword
+        filterMeals(by: [])
+    }
+
 }
