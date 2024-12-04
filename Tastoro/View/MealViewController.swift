@@ -135,4 +135,13 @@ extension MealViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            presenter?.viewDidLoad()
+        } else {
+            let filteredMeals = meals.filter { $0.strMeal.lowercased().contains(searchText.lowercased()) }
+            showMeals(filteredMeals)
+        }
+    }
 }
