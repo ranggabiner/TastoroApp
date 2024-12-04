@@ -5,14 +5,13 @@
 //  Created by Rangga Biner on 04/12/24.
 //
 
-
 import Foundation
 
 protocol MealPresenterProtocol: AnyObject {
     var view: MealViewProtocol? { get set }
     func viewDidLoad()
     func didSelectMeal(at index: Int)
-    func filterMeals(by area: String)
+    func filterMeals(by areas: [String])
 }
 
 class MealPresenter: MealPresenterProtocol {
@@ -27,7 +26,7 @@ class MealPresenter: MealPresenterProtocol {
     }
     
     func viewDidLoad() {
-        interactor.fetchMeals(area: nil) { [weak self] result in
+        interactor.fetchMeals(areas: []) { [weak self] result in
             switch result {
             case .success(let meals):
                 self?.meals = meals
@@ -44,12 +43,13 @@ class MealPresenter: MealPresenterProtocol {
         router.navigateToMealDetail(meal: meal)
     }
     
-    func filterMeals(by area: String) {
-        interactor.fetchMeals(area: area) { [weak self] result in
+    func filterMeals(by areas: [String]) {
+        interactor.fetchMeals(areas: areas) { [weak self] result in
             switch result {
             case .success(let meals):
-                self?.meals = meals
-                self?.view?.showMeals(meals)
+                let uniqueMeals = Array(Set(meals))
+                self?.meals = uniqueMeals
+                self?.view?.showMeals(uniqueMeals)
             case .failure(let error):
                 self?.view?.showError(error.localizedDescription)
             }

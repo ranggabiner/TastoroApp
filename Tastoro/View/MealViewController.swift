@@ -5,7 +5,6 @@
 //  Created by Rangga Biner on 03/12/24.
 //
 
-// MealViewController.swift
 import UIKit
 
 protocol MealViewProtocol: AnyObject {
@@ -17,24 +16,47 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
     let tableView = UITableView()
     var presenter: MealPresenterProtocol?
     private var meals: [Meal] = []
-    private let areaFilter = UISegmentedControl(items: ["All", "Indian", "Chinese", "Japanese", "French", "Moroccan"])
+    private let toggleButtons: [UIButton] = ["Indian", "Chinese", "Japanese", "French", "Moroccan"].map {
+        let button = UIButton(type: .system)
+        button.setTitle($0, for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.systemBlue.cgColor
+        button.layer.cornerRadius = 8
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(toggleButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }
+    private var selectedAreas: [String] = []
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search Meals"
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
-    private var filteredMeals: [Meal] = []
-    private var isSearching: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Choose Your Menu"
         view.backgroundColor = .white
-        setupAreaFilter()
+        setupToggleButtons()
         setupSearchBar()
         setupTableView()
         presenter?.viewDidLoad()
+    }
+    
+    private func setupToggleButtons() {
+        let buttonStack = UIStackView(arrangedSubviews: toggleButtons)
+        buttonStack.axis = .horizontal
+        buttonStack.distribution = .fillEqually
+        buttonStack.spacing = 8
+        buttonStack.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(buttonStack)
+        
+        NSLayoutConstraint.activate([
+            buttonStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
     }
     
     private func setupSearchBar() {
@@ -42,25 +64,12 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         view.addSubview(searchBar)
         
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: areaFilter.bottomAnchor, constant: 8),
+            searchBar.topAnchor.constraint(equalTo: toggleButtons.first!.bottomAnchor, constant: 8),
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
-
-    private func setupAreaFilter() {
-        areaFilter.selectedSegmentIndex = 0
-        areaFilter.addTarget(self, action: #selector(areaFilterChanged), for: .valueChanged)
-        areaFilter.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(areaFilter)
-        
-        NSLayoutConstraint.activate([
-            areaFilter.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            areaFilter.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            areaFilter.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-        ])
-    }
-
+    
     private func setupTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
@@ -75,9 +84,21 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    @objc private func areaFilterChanged() {
-        let selectedArea = areaFilter.titleForSegment(at: areaFilter.selectedSegmentIndex) ?? "All"
-        presenter?.filterMeals(by: selectedArea == "All" ? "" : selectedArea)
+    
+    @objc private func toggleButtonTapped(_ sender: UIButton) {
+        guard let title = sender.title(for: .normal) else { return }
+
+        if selectedAreas.contains(title) {
+            selectedAreas.removeAll { $0 == title }
+            sender.backgroundColor = .white
+            sender.setTitleColor(.systemBlue, for: .normal)
+        } else {
+            selectedAreas.append(title)
+            sender.backgroundColor = .systemBlue
+            sender.setTitleColor(.white, for: .normal)
+        }
+
+        presenter?.filterMeals(by: selectedAreas)
     }
     
     func showMeals(_ meals: [Meal]) {
@@ -90,19 +111,18 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
     func showError(_ message: String) {
         print("Error: \(message)")
     }
-    
 }
 
 extension MealViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isSearching ? filteredMeals.count : meals.count
+        return meals.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath) as? MealTableViewCell else {
             return UITableViewCell()
         }
-        let meal = isSearching ? filteredMeals[indexPath.row] : meals[indexPath.row]
+        let meal = meals[indexPath.row]
         cell.mealLabel.text = meal.strMeal
         if let imageUrl = URL(string: meal.strMealThumb) {
             URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
@@ -115,30 +135,4 @@ extension MealViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        presenter?.didSelectMeal(at: indexPath.row)
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            isSearching = false
-            filteredMeals = []
-        } else {
-            isSearching = true
-            filteredMeals = meals.filter { $0.strMeal.lowercased().contains(searchText.lowercased()) }
-        }
-        tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        isSearching = false
-        filteredMeals = []
-        tableView.reloadData()
-        searchBar.resignFirstResponder()
-    }
-
-    
 }
