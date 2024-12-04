@@ -13,10 +13,20 @@ protocol MealViewProtocol: AnyObject {
 }
 
 class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegate {
-    let tableView = UITableView()
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 16
+        layout.minimumInteritemSpacing = 16
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .white
+        return collectionView
+    }()
+    
     var presenter: MealPresenterProtocol?
     private var meals: [Meal] = []
-    private var toggleButtons: [UIButton] = [] // Mulai dengan array kosong
+    private var toggleButtons: [UIButton] = []
     private var selectedAreas: [String] = []
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -24,16 +34,22 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
-    
+    private let dividerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray
+        return view
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Choose Your Menu"
         view.backgroundColor = .white
         setupSearchBar()
-        setupTableView()
-        fetchAreas() // Fetch area dari API
+        setupCollectionView()
+        fetchAreas()
         presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: "")
-        
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
@@ -42,7 +58,11 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
-    
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        dismissKeyboard()
+    }
+
     private func fetchAreas() {
         guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/list.php?a=list") else { return }
 
@@ -91,15 +111,21 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         }
         setupToggleButtons()
     }
-    
+
     private func setupSearchBar() {
         searchBar.delegate = self
         view.addSubview(searchBar)
-        
+        view.addSubview(dividerView)
+
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            dividerView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 0),
+            dividerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            dividerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            dividerView.heightAnchor.constraint(equalToConstant: 0.5)
         ])
     }
 
@@ -117,34 +143,33 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         scrollView.addSubview(buttonStack)
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 8),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            scrollView.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: 8),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.heightAnchor.constraint(equalToConstant: 31),
 
             buttonStack.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            buttonStack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            buttonStack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             buttonStack.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             buttonStack.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             buttonStack.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
     }
-    
-    private func setupTableView() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(MealTableViewCell.self, forCellReuseIdentifier: "MealCell")
-        view.addSubview(tableView)
-        
+
+    private func setupCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(MealCollectionViewCell.self, forCellWithReuseIdentifier: "MealCell")
+        view.addSubview(collectionView)
+
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: 60),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
+
     @objc private func toggleButtonTapped(_ sender: UIButton) {
         guard let title = sender.title(for: .normal) else { return }
 
@@ -168,7 +193,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
     func showMeals(_ meals: [Meal]) {
         self.meals = meals
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.collectionView.reloadData()
         }
     }
     
@@ -177,14 +202,14 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
     }
 }
 
-extension MealViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension MealViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return meals.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath) as? MealTableViewCell else {
-            return UITableViewCell()
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MealCell", for: indexPath) as? MealCollectionViewCell else {
+            return UICollectionViewCell()
         }
         let meal = meals[indexPath.row]
         cell.mealLabel.text = meal.strMeal
@@ -200,5 +225,10 @@ extension MealViewController: UITableViewDataSource, UITableViewDelegate {
             }.resume()
         }
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.bounds.width - 16) / 2
+        return CGSize(width: width, height: width + 60)
     }
 }
