@@ -16,16 +16,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
     let tableView = UITableView()
     var presenter: MealPresenterProtocol?
     private var meals: [Meal] = []
-    private let toggleButtons: [UIButton] = ["Indian", "Chinese", "Japanese", "French", "Moroccan"].map {
-        let button = UIButton(type: .system)
-        button.setTitle($0, for: .normal)
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.systemBlue.cgColor
-        button.layer.cornerRadius = 8
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(toggleButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }
+    private var toggleButtons: [UIButton] = [] // Mulai dengan array kosong
     private var selectedAreas: [String] = []
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -39,8 +30,8 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         title = "Choose Your Menu"
         view.backgroundColor = .white
         setupSearchBar()
-        setupToggleButtons()
         setupTableView()
+        fetchAreas() // Fetch area dari API
         presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: "")
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -52,10 +43,53 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         view.endEditing(true)
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        dismissKeyboard()
+    private func fetchAreas() {
+        guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/list.php?a=list") else { return }
+
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self?.showError("Failed to fetch areas: \(error.localizedDescription)")
+                }
+                return
+            }
+            
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    self?.showError("No data received")
+                }
+                return
+            }
+            
+            do {
+                let response = try JSONDecoder().decode(AreaResponse.self, from: data)
+                let areas = response.meals?.compactMap { $0.strArea } ?? []
+                DispatchQueue.main.async {
+                    self?.updateToggleButtons(with: areas)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self?.showError("Failed to parse areas: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
     }
 
+    private func updateToggleButtons(with areas: [String]) {
+        toggleButtons.forEach { $0.removeFromSuperview() }
+        toggleButtons = areas.map { area -> UIButton in
+            let button = UIButton(type: .system)
+            button.setTitle(area, for: .normal)
+            button.layer.borderWidth = 1
+            button.layer.borderColor = UIColor.systemBlue.cgColor
+            button.layer.cornerRadius = 8
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.addTarget(self, action: #selector(toggleButtonTapped(_:)), for: .touchUpInside)
+            return button
+        }
+        setupToggleButtons() // Pasang ulang tombol di UI
+    }
+    
     private func setupSearchBar() {
         searchBar.delegate = self
         view.addSubview(searchBar)
@@ -102,7 +136,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: toggleButtons.first!.superview!.bottomAnchor, constant: 8),
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 60),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
