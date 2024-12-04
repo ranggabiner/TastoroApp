@@ -16,7 +16,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
     let tableView = UITableView()
     var presenter: MealPresenterProtocol?
     private var meals: [Meal] = []
-    private let toggleButtons: [UIButton] = ["Indian", "Chinese", "Japanese", "French", "Moroccan"].map {
+    private let toggleButtons: [UIButton] = ["Indian", "Chinese", "Japanese", "French", "Moroccan", "Moroccan", "Moroccan", "Moroccan"].map {
         let button = UIButton(type: .system)
         button.setTitle($0, for: .normal)
         button.layer.borderWidth = 1
@@ -38,8 +38,8 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         super.viewDidLoad()
         title = "Choose Your Menu"
         view.backgroundColor = .white
-        setupToggleButtons()
         setupSearchBar()
+        setupToggleButtons()
         setupTableView()
         presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: "")
         
@@ -56,29 +56,41 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         dismissKeyboard()
     }
 
-    private func setupToggleButtons() {
-        let buttonStack = UIStackView(arrangedSubviews: toggleButtons)
-        buttonStack.axis = .horizontal
-        buttonStack.distribution = .fillEqually
-        buttonStack.spacing = 8
-        buttonStack.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(buttonStack)
-        
-        NSLayoutConstraint.activate([
-            buttonStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-        ])
-    }
-    
     private func setupSearchBar() {
         searchBar.delegate = self
         view.addSubview(searchBar)
         
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: toggleButtons.first!.bottomAnchor, constant: 8),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
+    }
+
+    private func setupToggleButtons() {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
+        view.addSubview(scrollView)
+        
+        let buttonStack = UIStackView(arrangedSubviews: toggleButtons)
+        buttonStack.axis = .horizontal
+        buttonStack.distribution = .fill
+        buttonStack.spacing = 8
+        buttonStack.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(buttonStack)
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 8),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            scrollView.heightAnchor.constraint(equalToConstant: 50),
+
+            buttonStack.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            buttonStack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            buttonStack.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            buttonStack.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            buttonStack.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
     }
     
@@ -90,7 +102,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 8),
+            tableView.topAnchor.constraint(equalTo: toggleButtons.first!.superview!.bottomAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
