@@ -12,9 +12,9 @@ protocol MealPresenterProtocol: AnyObject {
     func viewDidLoad()
     func didSelectMeal(at index: Int)
     func filterMeals(by areas: [String])
-    func updateKeyword(_ keyword: String) // Tambahkan fungsi ini
+    func updateKeyword(_ keyword: String)
+    func updateFilterAndKeyword(areas: [String], keyword: String)
 }
-
 class MealPresenter: MealPresenterProtocol {
     weak var view: MealViewProtocol?
     private let interactor: MealInteractorProtocol
@@ -28,7 +28,7 @@ class MealPresenter: MealPresenterProtocol {
     }
     
     func viewDidLoad() {
-        interactor.fetchMeals(areas: [], keyword: "chicken") { [weak self] result in
+        interactor.fetchMeals(areas: [], keyword: "") { [weak self] result in
             switch result {
             case .success(let meals):
                 self?.meals = meals
@@ -46,7 +46,7 @@ class MealPresenter: MealPresenterProtocol {
     }
     
     func filterMeals(by areas: [String]) {
-        let currentKeyword = keyword.isEmpty ? "chicken" : keyword
+        let currentKeyword = keyword.isEmpty ? "" : keyword
         interactor.fetchMeals(areas: areas, keyword: currentKeyword) { [weak self] result in
             switch result {
             case .success(let meals):
@@ -59,9 +59,23 @@ class MealPresenter: MealPresenterProtocol {
         }
     }
 
-    func updateKeyword(_ keyword: String) {
+        func updateKeyword(_ keyword: String) {
+            self.keyword = keyword
+            filterMeals(by: [])
+        }
+    
+    func updateFilterAndKeyword(areas: [String], keyword: String) {
         self.keyword = keyword
-        filterMeals(by: [])
+        interactor.fetchMeals(areas: areas, keyword: keyword) { [weak self] result in
+            switch result {
+            case .success(let meals):
+                let uniqueMeals = Array(Set(meals))
+                self?.meals = uniqueMeals
+                self?.view?.showMeals(uniqueMeals)
+            case .failure(let error):
+                self?.view?.showError(error.localizedDescription)
+            }
+        }
     }
 
 }

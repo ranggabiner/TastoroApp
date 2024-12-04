@@ -41,7 +41,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         setupToggleButtons()
         setupSearchBar()
         setupTableView()
-        presenter?.viewDidLoad()
+        presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: "")
     }
     
     private func setupToggleButtons() {
@@ -98,7 +98,11 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
             sender.setTitleColor(.white, for: .normal)
         }
 
-        presenter?.filterMeals(by: selectedAreas)
+        presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: searchBar.text ?? "")
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: searchText)
     }
     
     func showMeals(_ meals: [Meal]) {
@@ -117,7 +121,7 @@ extension MealViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return meals.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MealCell", for: indexPath) as? MealTableViewCell else {
             return UITableViewCell()
@@ -135,11 +139,4 @@ extension MealViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            presenter?.updateKeyword("chicken")
-        } else {
-            presenter?.updateKeyword(searchText)
-        }
-    }}
+}
