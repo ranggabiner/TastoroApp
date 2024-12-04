@@ -22,7 +22,7 @@ class MealInteractor: MealInteractorProtocol {
                 ? "http://www.themealdb.com/api/json/v1/1/search.php?s=\(keyword)"
                 : "http://www.themealdb.com/api/json/v1/1/filter.php?a=\(area)"
             dispatchGroup.enter()
-            fetchMealsFromAPI(urlString: urlString) { result in
+            fetchMealsFromAPI(urlString: urlString, area: area.isEmpty ? nil : area) { result in
                 switch result {
                 case .success(let meals):
                     allMeals.append(contentsOf: meals)
@@ -44,7 +44,7 @@ class MealInteractor: MealInteractorProtocol {
     }
 
     
-    private func fetchMealsFromAPI(urlString: String, completion: @escaping (Result<[Meal], Error>) -> Void) {
+    private func fetchMealsFromAPI(urlString: String, area: String?, completion: @escaping (Result<[Meal], Error>) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return
@@ -63,7 +63,18 @@ class MealInteractor: MealInteractorProtocol {
             
             do {
                 let response = try JSONDecoder().decode(MealResponse.self, from: data)
-                completion(.success(response.meals ?? []))
+                var meals = response.meals ?? []
+                if let area = area {
+                    meals = meals.map { meal in
+                        Meal(
+                            idMeal: meal.idMeal,
+                            strMeal: meal.strMeal,
+                            strMealThumb: meal.strMealThumb,
+                            strArea: area
+                        )
+                    }
+                }
+                completion(.success(meals))
             } catch {
                 completion(.failure(error))
             }
