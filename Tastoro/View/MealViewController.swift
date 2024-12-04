@@ -80,14 +80,16 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         toggleButtons = areas.map { area -> UIButton in
             let button = UIButton(type: .system)
             button.setTitle(area, for: .normal)
+            button.setTitleColor(UIColor(named: "primaryYellow"), for: .normal)
             button.layer.borderWidth = 1
-            button.layer.borderColor = UIColor.systemBlue.cgColor
-            button.layer.cornerRadius = 8
+            button.layer.borderColor = UIColor(named: "primaryYellow")?.cgColor
+            button.layer.cornerRadius = 16
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: #selector(toggleButtonTapped(_:)), for: .touchUpInside)
+            button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
             return button
         }
-        setupToggleButtons() // Pasang ulang tombol di UI
+        setupToggleButtons()
     }
     
     private func setupSearchBar() {
@@ -118,7 +120,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
             scrollView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 8),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            scrollView.heightAnchor.constraint(equalToConstant: 50),
+            scrollView.heightAnchor.constraint(equalToConstant: 31),
 
             buttonStack.topAnchor.constraint(equalTo: scrollView.topAnchor),
             buttonStack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -149,11 +151,11 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         if selectedAreas.contains(title) {
             selectedAreas.removeAll { $0 == title }
             sender.backgroundColor = .white
-            sender.setTitleColor(.systemBlue, for: .normal)
+            sender.setTitleColor(.primaryYellow, for: .normal)
         } else {
             selectedAreas.append(title)
-            sender.backgroundColor = .systemBlue
-            sender.setTitleColor(.white, for: .normal)
+            sender.backgroundColor = UIColor(named: "primaryYellow")
+            sender.setTitleColor(.black, for: .normal)
         }
 
         presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: searchBar.text ?? "")
