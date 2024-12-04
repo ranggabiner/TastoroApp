@@ -42,8 +42,20 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         setupSearchBar()
         setupTableView()
         presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: "")
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        dismissKeyboard()
+    }
+
     private func setupToggleButtons() {
         let buttonStack = UIStackView(arrangedSubviews: toggleButtons)
         buttonStack.axis = .horizontal
