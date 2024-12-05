@@ -228,7 +228,16 @@ extension MealViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        
+        let padding: CGFloat = 16
+        let interItemSpacing: CGFloat = 16
+        
         let width = (collectionView.bounds.width - 16) / 2
-        return CGSize(width: width, height: width + 60)
+        
+        let itemHeight = screenHeight * 0.3
+        
+        return CGSize(width: width, height: itemHeight)
     }
 }
