@@ -161,7 +161,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
 
             buttonStack.topAnchor.constraint(equalTo: scrollView.topAnchor),
             buttonStack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            buttonStack.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            buttonStack.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             buttonStack.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             buttonStack.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
