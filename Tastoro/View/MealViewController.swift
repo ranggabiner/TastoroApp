@@ -17,7 +17,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 16
-        layout.minimumInteritemSpacing = 16
+        layout.minimumInteritemSpacing = 0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
@@ -97,19 +97,30 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
 
     private func updateToggleButtons(with areas: [String]) {
         toggleButtons.forEach { $0.removeFromSuperview() }
-        toggleButtons = areas.map { area -> UIButton in
+        
+        toggleButtons = areas.map { area in
             let button = UIButton(type: .system)
-            button.setTitle(area, for: .normal)
-            button.setTitleColor(UIColor(named: "primaryYellow"), for: .normal)
-            button.layer.borderWidth = 1
-            button.layer.borderColor = UIColor(named: "primaryYellow")?.cgColor
-            button.layer.cornerRadius = 16
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.addTarget(self, action: #selector(toggleButtonTapped(_:)), for: .touchUpInside)
-            button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
+            configureToggleButton(button, withTitle: area)
             return button
         }
+        
         setupToggleButtons()
+    }
+
+    private func configureToggleButton(_ button: UIButton, withTitle title: String) {
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = UIColor(named: "primaryYellow")
+        button.layer.cornerRadius = 16
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(toggleButtonTapped(_:)), for: .touchUpInside)
+        button.configuration = configureButtonContentInsets()
+    }
+
+    private func configureButtonContentInsets() -> UIButton.Configuration {
+        var configuration = UIButton.Configuration.plain()
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20)
+        return configuration
     }
 
     private func setupSearchBar() {
@@ -175,12 +186,12 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
 
         if selectedAreas.contains(title) {
             selectedAreas.removeAll { $0 == title }
-            sender.backgroundColor = .white
-            sender.setTitleColor(.primaryYellow, for: .normal)
+            sender.backgroundColor = .primaryYellow
+            sender.setTitleColor(.black, for: .normal)
         } else {
             selectedAreas.append(title)
-            sender.backgroundColor = UIColor(named: "primaryYellow")
-            sender.setTitleColor(.black, for: .normal)
+            sender.backgroundColor = UIColor(named: "secondaryRed")
+            sender.setTitleColor(.white, for: .normal)
         }
 
         presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: searchBar.text ?? "")
@@ -206,7 +217,7 @@ extension MealViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return meals.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MealCell", for: indexPath) as? MealCollectionViewCell else {
             return UICollectionViewCell()
@@ -226,18 +237,14 @@ extension MealViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let screenWidth = UIScreen.main.bounds.width
-        let screenHeight = UIScreen.main.bounds.height
-        
         let padding: CGFloat = 16
-        let interItemSpacing: CGFloat = 16
+        let itemsPerRow: CGFloat = 2
+        let totalPadding = padding * (itemsPerRow - 1)
+        let availableWidth = collectionView.bounds.width - totalPadding
+        let itemWidth = availableWidth / itemsPerRow
         
-        let width = (collectionView.bounds.width - 16) / 2
-        
-        let itemHeight = screenHeight * 0.3
-        
-        return CGSize(width: width, height: itemHeight)
-    }
-}
+        let itemHeight = itemWidth * 1.5
+        return CGSize(width: itemWidth, height: itemHeight)
+    }}
