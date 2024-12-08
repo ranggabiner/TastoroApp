@@ -1,12 +1,22 @@
+//
+//  MealDetailViewController.swift
+//  Tastoro
+//
+//  Created by Rangga Biner on 04/12/24.
+//
+
 import UIKit
 
 class MealDetailViewController: UIViewController {
     var meal: Meal?
+    private let scrollView = UIScrollView()
+    private let contentView = UIStackView()
     private let mealImageView = UIImageView()
     private let mealNameLabel = UILabel()
     private let areaLabel = UILabel()
     private let ingredientsLabel = UILabel()
     private let instructionsLabel = UILabel()
+    private let areaLabelContainer = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,49 +26,99 @@ class MealDetailViewController: UIViewController {
     }
 
     private func setupUI() {
+        // Konfigurasi ScrollView dan ContentView
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsHorizontalScrollIndicator = false
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.axis = .vertical
+        contentView.spacing = 16
+        contentView.alignment = .center
+        contentView.isLayoutMarginsRelativeArrangement = true
+
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+
+        // Konfigurasi elemen UI lainnya
         mealImageView.translatesAutoresizingMaskIntoConstraints = false
+        mealImageView.contentMode = .scaleAspectFill
+        mealImageView.clipsToBounds = true
+
         mealNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        mealNameLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        mealNameLabel.textAlignment = .center
+        mealNameLabel.adjustsFontForContentSizeCategory = true
+
         areaLabel.translatesAutoresizingMaskIntoConstraints = false
+        areaLabel.font = UIFont.preferredFont(forTextStyle: .caption2)
+        areaLabel.textColor = .white
+        areaLabel.textAlignment = .center
+
+        areaLabelContainer.translatesAutoresizingMaskIntoConstraints = false
+        areaLabelContainer.backgroundColor = UIColor(named: "secondaryRed")
+        areaLabelContainer.layer.cornerRadius = 16
+        areaLabelContainer.layer.masksToBounds = true
+
         ingredientsLabel.translatesAutoresizingMaskIntoConstraints = false
-        instructionsLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        ingredientsLabel.font = UIFont.systemFont(ofSize: 16)
+        ingredientsLabel.textColor = .black
+        ingredientsLabel.textAlignment = .natural
         ingredientsLabel.numberOfLines = 0
+        ingredientsLabel.adjustsFontForContentSizeCategory = true
+
+        instructionsLabel.translatesAutoresizingMaskIntoConstraints = false
+        instructionsLabel.font = UIFont.systemFont(ofSize: 16)
+        instructionsLabel.textColor = .black
         instructionsLabel.numberOfLines = 0
+        instructionsLabel.adjustsFontForContentSizeCategory = true
 
-        view.addSubview(mealImageView)
-        view.addSubview(mealNameLabel)
-        view.addSubview(areaLabel)
-        view.addSubview(ingredientsLabel)
-        view.addSubview(instructionsLabel)
+        contentView.addArrangedSubview(mealImageView)
+        contentView.addArrangedSubview(mealNameLabel)
+        areaLabelContainer.addSubview(areaLabel)
+        contentView.addArrangedSubview(areaLabelContainer)
+        contentView.addArrangedSubview(ingredientsLabel)
+        contentView.addArrangedSubview(instructionsLabel)
 
+        // Set constraints
         NSLayoutConstraint.activate([
-            mealImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            mealImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            mealImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            mealImageView.heightAnchor.constraint(equalTo: mealImageView.widthAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            mealNameLabel.topAnchor.constraint(equalTo: mealImageView.bottomAnchor, constant: 16),
-            mealNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            mealNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
-            areaLabel.topAnchor.constraint(equalTo: mealNameLabel.bottomAnchor, constant: 8),
-            areaLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            areaLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            mealImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            mealImageView.heightAnchor.constraint(equalToConstant: 296),
+            mealImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
 
-            ingredientsLabel.topAnchor.constraint(equalTo: areaLabel.bottomAnchor, constant: 16),
-            ingredientsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            ingredientsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            areaLabelContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            areaLabelContainer.heightAnchor.constraint(equalToConstant: 32),
+            areaLabelContainer.widthAnchor.constraint(equalTo: areaLabel.widthAnchor, constant: 24),
 
-            instructionsLabel.topAnchor.constraint(equalTo: ingredientsLabel.bottomAnchor, constant: 16),
-            instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            instructionsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            areaLabel.leadingAnchor.constraint(equalTo: areaLabelContainer.leadingAnchor, constant: 12),
+            areaLabel.trailingAnchor.constraint(equalTo: areaLabelContainer.trailingAnchor, constant: -12),
+            areaLabel.topAnchor.constraint(equalTo: areaLabelContainer.topAnchor, constant: 6),
+            areaLabel.bottomAnchor.constraint(equalTo: areaLabelContainer.bottomAnchor, constant: -6),
+
+            ingredientsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            ingredientsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+
+            instructionsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            instructionsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+
         ])
     }
 
     private func configureView() {
         guard let meal = meal else { return }
         mealNameLabel.text = meal.strMeal
-        areaLabel.text = "Area: \(meal.strArea ?? "Unknown")"
+        areaLabel.text = meal.strArea ?? "Unknown"
         ingredientsLabel.text = "Ingredients:\n" + (meal.ingredients?.joined(separator: "\n") ?? "N/A")
         instructionsLabel.text = "Instructions:\n\(meal.instructions ?? "N/A")"
 
