@@ -40,6 +40,51 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         view.backgroundColor = .lightGray
         return view
     }()
+    private let emptyStateView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "emptyLogo")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        let headlineLabel = UILabel()
+        headlineLabel.text = "No Dishes Found"
+        headlineLabel.textColor = .gray
+        headlineLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        headlineLabel.textAlignment = .center
+        headlineLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        let subheadlineLabel = UILabel()
+        subheadlineLabel.text = "We couldn’t find any dishes matching your search. Try adjusting the filters or using a different keyword."
+        subheadlineLabel.textColor = .gray
+        subheadlineLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        subheadlineLabel.textAlignment = .center
+        subheadlineLabel.numberOfLines = 0
+        subheadlineLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(imageView)
+        view.addSubview(headlineLabel)
+        view.addSubview(subheadlineLabel)
+
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+
+            headlineLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            headlineLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+
+            subheadlineLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            subheadlineLabel.topAnchor.constraint(equalTo: headlineLabel.bottomAnchor, constant: 8),
+            subheadlineLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            subheadlineLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            subheadlineLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +94,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         setupCollectionView()
         fetchAreas()
         presenter?.updateFilterAndKeyword(areas: selectedAreas, keyword: "")
+        setupEmptyStateView()
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -63,6 +109,16 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         dismissKeyboard()
     }
 
+    private func setupEmptyStateView() {
+        view.addSubview(emptyStateView)
+        NSLayoutConstraint.activate([
+            emptyStateView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyStateView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyStateView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            emptyStateView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
+    }
+    
     private func fetchAreas() {
         guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/list.php?a=list") else { return }
 
@@ -213,6 +269,7 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
         self.meals = meals
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            self.emptyStateView.isHidden = !self.meals.isEmpty
         }
     }
     
