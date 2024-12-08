@@ -170,13 +170,21 @@ class MealViewController: UIViewController, MealViewProtocol, UISearchBarDelegat
     private func setupCollectionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.showsVerticalScrollIndicator = true
         collectionView.register(MealCollectionViewCell.self, forCellWithReuseIdentifier: "MealCell")
+        
+        // Tambahkan padding untuk konten
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16)
+        
+        // Pastikan scroll indicator tidak terpengaruh
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
         view.addSubview(collectionView)
 
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: 60),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
@@ -241,10 +249,11 @@ extension MealViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let padding: CGFloat = 16
         let itemsPerRow: CGFloat = 2
-        let totalPadding = padding * (itemsPerRow - 1)
-        let availableWidth = collectionView.bounds.width - totalPadding
+        let totalHorizontalPadding = padding * (itemsPerRow - 1) + collectionView.contentInset.left + collectionView.contentInset.right
+        let availableWidth = collectionView.bounds.width - totalHorizontalPadding
         let itemWidth = availableWidth / itemsPerRow
-        
+
         let itemHeight = itemWidth * 1.5
         return CGSize(width: itemWidth, height: itemHeight)
-    }}
+    }
+}

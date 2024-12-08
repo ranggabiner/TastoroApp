@@ -11,13 +11,13 @@ class MealCollectionViewCell: UICollectionViewCell {
     let mealImageView = UIImageView()
     let mealLabel = UILabel()
     let areaLabel = UILabel()
+    private let areaLabelContainer = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         contentView.layer.cornerRadius = 12
         contentView.layer.borderWidth = 1
-        
         contentView.layer.borderColor = UIColor.lightGray.cgColor
         contentView.layer.masksToBounds = true
 
@@ -30,18 +30,24 @@ class MealCollectionViewCell: UICollectionViewCell {
         mealImageView.translatesAutoresizingMaskIntoConstraints = false
         mealLabel.translatesAutoresizingMaskIntoConstraints = false
         areaLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        mealLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        areaLabelContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        mealLabel.font = UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .subheadline).pointSize, weight: .semibold)
         mealLabel.textAlignment = .left
         mealLabel.numberOfLines = 2
 
-        areaLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        areaLabel.textColor = .gray
-        areaLabel.textAlignment = .left
+        areaLabel.font = UIFont.preferredFont(forTextStyle: .caption2)
+        areaLabel.textColor = .white
+        areaLabel.textAlignment = .center
+
+        areaLabelContainer.backgroundColor = UIColor(named: "secondaryRed")
+        areaLabelContainer.layer.cornerRadius = 12
+        areaLabelContainer.layer.masksToBounds = true
 
         contentView.addSubview(mealImageView)
         contentView.addSubview(mealLabel)
-        contentView.addSubview(areaLabel)
+        contentView.addSubview(areaLabelContainer)
+        areaLabelContainer.addSubview(areaLabel)
 
         NSLayoutConstraint.activate([
             mealImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -49,14 +55,18 @@ class MealCollectionViewCell: UICollectionViewCell {
             mealImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             mealImageView.heightAnchor.constraint(equalTo: mealImageView.widthAnchor),
 
-            mealLabel.topAnchor.constraint(equalTo: mealImageView.bottomAnchor, constant: 8),
-            mealLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
-            mealLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
+            mealLabel.topAnchor.constraint(equalTo: mealImageView.bottomAnchor),
+            mealLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            mealLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
 
-            areaLabel.topAnchor.constraint(equalTo: mealLabel.bottomAnchor, constant: 4),
-            areaLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
-            areaLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
-            areaLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            areaLabelContainer.topAnchor.constraint(equalTo: mealLabel.bottomAnchor),
+            areaLabelContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            areaLabelContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+
+            areaLabel.leadingAnchor.constraint(equalTo: areaLabelContainer.leadingAnchor, constant: 12),
+            areaLabel.trailingAnchor.constraint(equalTo: areaLabelContainer.trailingAnchor, constant: -12),
+            areaLabel.topAnchor.constraint(equalTo: areaLabelContainer.topAnchor, constant: 6),
+            areaLabel.bottomAnchor.constraint(equalTo: areaLabelContainer.bottomAnchor, constant: -6)
         ])
     }
 
