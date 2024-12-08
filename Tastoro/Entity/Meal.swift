@@ -12,4 +12,6 @@ struct Meal: Codable, Hashable {
     let strMeal: String
     let strMealThumb: String
     let strArea: String?
+    let ingredients: [String]?
+    let instructions: String?
 }

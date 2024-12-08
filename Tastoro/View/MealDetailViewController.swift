@@ -2,11 +2,11 @@ import UIKit
 
 class MealDetailViewController: UIViewController {
     var meal: Meal?
-
     private let mealImageView = UIImageView()
     private let mealNameLabel = UILabel()
     private let areaLabel = UILabel()
-    private let descriptionLabel = UILabel() // Assuming meal has a description.
+    private let ingredientsLabel = UILabel()
+    private let instructionsLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,17 +19,17 @@ class MealDetailViewController: UIViewController {
         mealImageView.translatesAutoresizingMaskIntoConstraints = false
         mealNameLabel.translatesAutoresizingMaskIntoConstraints = false
         areaLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        ingredientsLabel.translatesAutoresizingMaskIntoConstraints = false
+        instructionsLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        mealNameLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        areaLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
-        descriptionLabel.numberOfLines = 0
+        ingredientsLabel.numberOfLines = 0
+        instructionsLabel.numberOfLines = 0
 
         view.addSubview(mealImageView)
         view.addSubview(mealNameLabel)
         view.addSubview(areaLabel)
-        view.addSubview(descriptionLabel)
+        view.addSubview(ingredientsLabel)
+        view.addSubview(instructionsLabel)
 
         NSLayoutConstraint.activate([
             mealImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -45,17 +45,22 @@ class MealDetailViewController: UIViewController {
             areaLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             areaLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 
-            descriptionLabel.topAnchor.constraint(equalTo: areaLabel.bottomAnchor, constant: 16),
-            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            ingredientsLabel.topAnchor.constraint(equalTo: areaLabel.bottomAnchor, constant: 16),
+            ingredientsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            ingredientsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+
+            instructionsLabel.topAnchor.constraint(equalTo: ingredientsLabel.bottomAnchor, constant: 16),
+            instructionsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            instructionsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
 
     private func configureView() {
         guard let meal = meal else { return }
         mealNameLabel.text = meal.strMeal
-        areaLabel.text = meal.strArea ?? "Unknown Area"
-        descriptionLabel.text = "This is a detailed description for \(meal.strMeal)." // Replace with real data if available.
+        areaLabel.text = "Area: \(meal.strArea ?? "Unknown")"
+        ingredientsLabel.text = "Ingredients:\n" + (meal.ingredients?.joined(separator: "\n") ?? "N/A")
+        instructionsLabel.text = "Instructions:\n\(meal.instructions ?? "N/A")"
 
         if let imageUrl = URL(string: meal.strMealThumb) {
             URLSession.shared.dataTask(with: imageUrl) { data, _, _ in
