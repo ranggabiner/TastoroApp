@@ -28,7 +28,9 @@ class MealRouter: MealRouterProtocol {
     }
     
     func navigateToMealDetail(meal: Meal) {
-        // Navigation logic to meal detail screen
-        print("Navigate to meal detail for \(meal.strMeal)")
+        let detailViewController = MealDetailViewController()
+        detailViewController.meal = meal
+        viewController?.navigationController?.pushViewController(detailViewController, animated: true)
     }
+    
 }
