@@ -313,4 +313,8 @@ extension MealViewController: UICollectionViewDataSource, UICollectionViewDelega
         let itemHeight = itemWidth * 1.5
         return CGSize(width: itemWidth, height: itemHeight)
     }
+    
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            presenter?.didSelectMeal(at: indexPath.row)
+        }
 }
